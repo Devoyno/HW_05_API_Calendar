@@ -11,18 +11,27 @@ $(document).ready(function () {
     console.log(localStorage);
   });
 
+  let dateString = moment().format('dddd') + ", " +moment().format("MMMM Do YY");
+    $("#currentDay").html(dateString.substring(0, dateString.length - 5) + "th");
+
   function rowColorizer() {
-    var thisTime = moment().hours();
-    console.log(thisTime);
+    var currTime = moment().hours();
+    console.log(currTime);
 
     $(".timeblock").each(function() {
       var ourTime = parseInt($(this).attr("id").split("-")[1]);
 
       console.log(ourTime);
-      // make if, else if and else compare currentTime to ourTime
-    });
-  }
 
+        if (currTime === ourTime) {
+          $(this).find("textarea").addClass('present');
+       } else if (currTime >= ourTime) {
+          $(this).find("textarea").addClass('past');
+       } else {
+           $(this).find("textarea").addClass('future');
+       }
+    });
+  };
   rowColorizer();
 
   $("#hour-9 .description").val(localStorage.getItem("hour-9"));
@@ -34,4 +43,5 @@ $(document).ready(function () {
   $("#hour-15 .description").val(localStorage.getItem("hour-15"));
   $("#hour-16 .description").val(localStorage.getItem("hour-16"));
   $("#hour-17 .description").val(localStorage.getItem("hour-17"));
+  
 });
